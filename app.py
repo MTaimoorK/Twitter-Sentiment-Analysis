@@ -28,10 +28,11 @@ def predict_sentiment(tweet, model, vectorizer):
     prediction = model.predict(vectorized_tweet)
     return prediction[0]
 
-# Load the trained model
+# Load the trained model and vectorizer
 def load_model():
     model = pickle.load(open('trained_model.sav', 'rb'))
-    return model
+    vectorizer = pickle.load(open('vectorizer.sav', 'rb'))
+    return model, vectorizer
 
 # Streamlit app
 def main():
@@ -41,11 +42,7 @@ def main():
 
     if st.button('Predict'):
         if tweet_input:
-            model = load_model()
-            vectorizer = TfidfVectorizer()
-            # Assuming your training data is accessible here
-            # Replace 'training_data' with the actual training data used for the model
-            vectorizer.fit(training_data['stemmed_content'].values)
+            model, vectorizer = load_model()
             prediction = predict_sentiment(tweet_input, model, vectorizer)
             if prediction == 0:
                 st.write("It is a negative tweet.")
