@@ -46,7 +46,7 @@ def main():
             prediction = predict_sentiment(tweet_input, model, vectorizer)
             if prediction == 0:
                 st.write("It is a negative tweet.")
-            else:
+            elif prediction == 1:
                 st.write("It is a positive tweet.")
         else:
             st.warning("Please enter a tweet.")
